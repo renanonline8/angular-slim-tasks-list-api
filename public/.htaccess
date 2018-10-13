@@ -18,6 +18,9 @@
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^ index.php [QSA,L]
+  RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  SetEnv SECRET_KEY secretkey
 </IfModule>
 
 Header Set Access-Control-Allow-Origin "*"
