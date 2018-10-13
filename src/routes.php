@@ -4,14 +4,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 // Routes
-
-$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
-});
+$app->get('/api/auth', 'ControllerAuth:authorize');
 
 $app->post('/api/tasks/create', function(Request $request, Response $response, array $args) {
     return $response->withJson(['success'=> true, 'id' => '1', 'message' => 'Tarefa criada com sucesso']);

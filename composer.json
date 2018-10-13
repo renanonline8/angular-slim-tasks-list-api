@@ -1,14 +1,13 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "renanonline8/angular-slim-tasks-list",
+    "description": "API para lista de tarefas simples para estudo do angular",
+    "keywords": ["task", "list", "api"],
+    "homepage": "https://github.com/renanonline8/angular-slim-tasks-list-api",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Renan Santos Gomes",
+            "email": "renanonline8@gmail.com"
         }
     ],
     "require": {
@@ -22,7 +21,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "App\\" : "src/app/",
+            "Utils\\" : "src/utils/"
         }
     },
     "config": {
