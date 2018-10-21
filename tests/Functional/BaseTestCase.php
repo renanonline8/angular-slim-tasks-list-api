@@ -60,6 +60,16 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // Set up dependencies
         require __DIR__ . '/../../src/dependencies.php';
 
+        \ActiveRecord\Config::initialize(function($cfg) use ($container)
+        {
+            $connections = array(
+                'development' => 'mysql://root:@localhost/angular_slim_tasks_list',
+            );
+            $pathModels = __DIR__ . '/../../src/app/model';
+            $cfg->set_model_directory($pathModels);
+            $cfg->set_connections($connections);
+        });
+
         // Register middleware
         if ($this->withMiddleware) {
             require __DIR__ . '/../../src/middleware.php';

@@ -4,7 +4,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 // Routes
-$app->post('/api/auth', 'ControllerAuth:authorize');
+$app->post('/api/auth', 'controllerAuth:authorize');
+
+$app->post('/api/user/new', 'controllerUser:new');
 
 $app->post('/api/tasks/create', function(Request $request, Response $response, array $args) {
     return $response->withJson(['success'=> true, 'id' => '1', 'message' => 'Tarefa criada com sucesso']);

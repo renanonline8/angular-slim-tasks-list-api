@@ -19,6 +19,19 @@ $container['logger'] = function ($c) {
 };
 
 //Controller Auth
-$container['ControllerAuth'] = function($c) {
+$container['controllerAuth'] = function($c) {
     return new \App\Controller\Auth($c);
+};
+
+$container['controllerUser'] = function($c) {
+    return new \App\Controller\User($c);
+};
+
+//Models
+$container['modelUser'] = function($c) {
+    return new \App\Model\User();
+};
+
+$container['modelToken'] = function($c) {
+    return new \App\Model\Token();
 };

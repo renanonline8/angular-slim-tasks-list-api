@@ -21,6 +21,7 @@
   RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
   SetEnv SECRET_KEY secretkey
+  SetEnv ACTIVERECORD_DEVELOPMENT mysql://root:@localhost/angular_slim_tasks_list
 </IfModule>
 
 Header Set Access-Control-Allow-Origin "*"

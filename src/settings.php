@@ -19,6 +19,14 @@ return [
         //JSON Web Token settings
         'jsonWebToken' => [
             'secretkey' => getenv('SECRET_KEY'),
+            'path' => '/api',
+            'ignore' => ['/api/auth', '/api/user/new'],
+            'relaxed' => ['localhost/angular-slim-tasks-list/public'],
+        ],
+
+        //ActiveRecord
+        'activeRecord' => [
+            'development' => getenv('ACTIVERECORD_DEVELOPMENT'),
         ],
     ],
 ];
