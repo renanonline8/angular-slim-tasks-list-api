@@ -12,7 +12,7 @@ class UserTest extends BaseTestCase
         );
 
         $response = $this->runApp('POST', '/api/user/new', $bodyTest);
-        
+
         $this->assertEquals(200, $response->getStatusCode());
     }
 }

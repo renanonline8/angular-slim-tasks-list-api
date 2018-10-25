@@ -27,6 +27,14 @@ $container['controllerUser'] = function($c) {
     return new \App\Controller\User($c);
 };
 
+$container['errorHandler'] = function ($c) {
+    return new \Utils\ErrorHandler\CustomExceptionHandler($c);
+};
+
+$container['phpErrorHandler'] = function ($c) {
+    return $c['errorHandler'];
+};
+
 //Models
 $container['modelUser'] = function($c) {
     return new \App\Model\User();
@@ -35,3 +43,4 @@ $container['modelUser'] = function($c) {
 $container['modelToken'] = function($c) {
     return new \App\Model\Token();
 };
+
