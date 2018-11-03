@@ -5,7 +5,8 @@ namespace App\Controller;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Utils\Controller\Controller;
-use App\User as Usr;
+use App\User\User as Usr;
+use App\ResponseAPI\ErrorResponse;
 
 class User extends Controller
 {
@@ -13,7 +14,12 @@ class User extends Controller
     {
         $body = $request->getParsedBody();
         $user = new Usr($this->modelUser);
-        $user->new($body['email'], $body['senha']);
+
+        try {
+            $user->new($body['email'], $body['senha']);
+        } catch (\App\User\Exceptions\ExceptionUserAlreadyExist $e) {
+            return (new ErrorResponse($e, $response))->errorReturn();
+        }
         
         $result = array('success' => true);
         return $response->withJson($result);
@@ -25,6 +31,8 @@ class User extends Controller
         $route = $request->getAttribute('route');
         $filter = $route->getArgument('filter');
         $value = $route->getArgument('value');
+
+        
         switch ($filter) {
             case 'email':
                 $result = array(
@@ -32,9 +40,31 @@ class User extends Controller
                     'value' => $value,
                     'result' => $user->checkExistUserByEmail($value)
                 );
+
+                if (!$user->checkExistUserByEmail($value)) {
+                    $responseCode = 500;
+                } else {
+                    $responseCode = 200;
+                }
+
                 break;
         }
+        return $response->withStatus($responseCode)->withJson($result);
+    }
 
-        return $response->withJson($result);
+    public function delete(Request $request, Response $response) {
+        $email = $request->getParsedBody()['email'];
+        $user = new Usr($this->modelUser);
+        
+        try {
+            $user->delete($email);
+        } catch (\App\User\Exceptions\ExceptionUserNotExist $e) {
+            return (new ErrorResponse($e, $response))->errorReturn();
+        }
+        
+        $json = [
+            'success' => true,
+        ];
+        return $response->withJson($json);
     }
 }

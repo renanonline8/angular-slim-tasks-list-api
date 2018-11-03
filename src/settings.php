@@ -28,5 +28,10 @@ return [
         'activeRecord' => [
             'development' => getenv('ACTIVERECORD_DEVELOPMENT'),
         ],
+
+        //PassUsper
+        'passSuper' => [
+            'pass' => getenv('PASS_SUPER'),
+        ]
     ],
 ];

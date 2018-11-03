@@ -22,6 +22,7 @@
 
   SetEnv SECRET_KEY secretkey
   SetEnv ACTIVERECORD_DEVELOPMENT mysql://root:@localhost/angular_slim_tasks_list
+  SetEnv PASS_SUPER $2y$10$00/2ZOylHfUzWhFDvJ4nqeNkLu7abPYIvszMZJQg0jeyoW7xgSWRy
 </IfModule>
 
 Header Set Access-Control-Allow-Origin "*"
