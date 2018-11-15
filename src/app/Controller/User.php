@@ -13,7 +13,7 @@ class User extends Controller
     public function new(Request $request, Response $response)
     {
         $body = $request->getParsedBody();
-        $user = new Usr($this->modelUser);
+        $user = new Usr($this->modelUser, $this->modelQueryUser);
 
         try {
             $user->new($body['email'], $body['senha']);

@@ -37,7 +37,11 @@ $container['phpErrorHandler'] = function ($c) {
 
 //Models
 $container['modelUser'] = function($c) {
-    return new \App\Model\User();
+    return new Users();
+};
+
+$container['modelQueryUser'] = function($c) {
+    return new UsersQuery();
 };
 
 $container['modelToken'] = function($c) {

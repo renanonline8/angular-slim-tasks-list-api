@@ -7,21 +7,25 @@ use App\User\Exceptions\ExceptionUserAlreadyExist;
 
 class User {
     private $modelUser;
+    private $modelQuery;
 
-    public function __construct(\App\Model\User $modelUser)
+    public function __construct($modelUser, $modelQuery)
     {
         $this->modelUser = $modelUser;
+        $this->modelQuery = $modelQuery;
     }
 
     public function new(String $email, String $password)
     {
-        $user = $this->findByEmail($email);
-        if (!empty($user)){
+        $user = $this->modelQuery->create()
+            ->filterByEmail($email)
+            ->findOne();
+        if(!empty($user)){
             throw new ExceptionUserAlreadyExist("Usuário já existe", 1);
         }
-        $this->modelUser->email = $email;
-        $this->modelUser->password = password_hash($password, PASSWORD_DEFAULT);
-        $this->modelUser->id_ext = uniqid();
+        $this->modelUser->setEmail($email);
+        $this->modelUser->setPassword(password_hash($password, PASSWORD_DEFAULT));
+        $this->modelUser->setIdExt(uniqid());
         $this->modelUser->save();
 
         return $this->modelUser;

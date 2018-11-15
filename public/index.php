@@ -11,6 +11,8 @@ if (PHP_SAPI == 'cli-server') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
+require_once '../generated-conf/config.php';
+
 session_start();
 
 // Instantiate the app
