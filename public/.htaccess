@@ -21,8 +21,10 @@
   RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
   SetEnv SECRET_KEY secretkey
-  SetEnv ACTIVERECORD_DEVELOPMENT mysql://root:@localhost/angular_slim_tasks_list
   SetEnv PASS_SUPER $2y$10$00/2ZOylHfUzWhFDvJ4nqeNkLu7abPYIvszMZJQg0jeyoW7xgSWRy
+  SetEnv PROPEL_BD_DSN mysql:host=localhost;dbname=angular_slim_tasks_list
+  SetEnv PROPEL_BD_USER root
+  SetEnv PROPEL_BD_PASS 
 </IfModule>
 
 Header Set Access-Control-Allow-Origin "*"

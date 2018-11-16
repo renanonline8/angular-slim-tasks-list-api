@@ -22,16 +22,6 @@ $app = new \Slim\App($settings);
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
 
-ActiveRecord\Config::initialize(function($cfg) use ($container)
-{
-    $connections = array(
-        'development' => $container->get('settings')['activeRecord']['development'],
-    );
-    $pathModels = __DIR__ . '/../src/app/model';
-    $cfg->set_model_directory($pathModels);
-    $cfg->set_connections($connections);
-});
-
 // Register middleware
 require __DIR__ . '/../src/middleware.php';
 

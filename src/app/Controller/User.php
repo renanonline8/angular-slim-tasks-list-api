@@ -7,12 +7,29 @@ use Slim\Http\Response;
 use Utils\Controller\Controller;
 use App\User\User as Usr;
 use App\ResponseAPI\ErrorResponse;
+use Respect\Validation\Validator as v;
+use Respect\Validation\Exceptions\NestedValidationException;
 
 class User extends Controller
 {
     public function new(Request $request, Response $response)
     {
         $body = $request->getParsedBody();
+
+        $user = new \StdClass;
+        $user->email = $body['email'];
+        $user->pass = $body['senha'];
+
+        $userValidator = v::
+                attribute('email', v::email())
+                ->attribute('pass', v::notEmpty());
+
+        try {
+            $userValidator->assert($user);
+        } catch (NestedValidationException $e) {
+            return (new ErrorResponse($e, $response))->errorReturn();
+        }
+        
         $user = new Usr($this->modelUser, $this->modelQueryUser);
 
         try {
@@ -27,7 +44,7 @@ class User extends Controller
 
     public function checkUserExist(Request $request, Response $response)
     {
-        $user = new Usr($this->modelUser);
+        $user = new Usr($this->modelUser, $this->modelQueryUser);
         $route = $request->getAttribute('route');
         $filter = $route->getArgument('filter');
         $value = $route->getArgument('value');
@@ -54,7 +71,7 @@ class User extends Controller
 
     public function delete(Request $request, Response $response) {
         $email = $request->getParsedBody()['email'];
-        $user = new Usr($this->modelUser);
+        $user = new Usr($this->modelUser, $this->modelQueryUser);
         
         try {
             $user->delete($email);

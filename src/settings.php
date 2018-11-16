@@ -24,11 +24,6 @@ return [
             'relaxed' => ['localhost/angular-slim-tasks-list/public'],
         ],
 
-        //ActiveRecord
-        'activeRecord' => [
-            'development' => getenv('ACTIVERECORD_DEVELOPMENT'),
-        ],
-
         //PassUsper
         'passSuper' => [
             'pass' => getenv('PASS_SUPER'),

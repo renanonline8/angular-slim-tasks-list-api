@@ -7,9 +7,9 @@ return [
                 'maindatabase' => [
                     'adapter'    => 'mysql',
                     'classname'  => 'Propel\Runtime\Connection\ConnectionWrapper',
-                    'dsn'        => 'mysql:host=localhost;dbname=angular_slim_tasks_list',
-                    'user'       => 'root',
-                    'password'   => '',
+                    'dsn'        => getenv('PROPEL_BD_DSN'),
+                    'user'       => getenv('PROPEL_BD_USER'),
+                    'password'   => getenv('PROPEL_BD_PASS'),
                     'attributes' => []
                 ]
             ]

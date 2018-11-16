@@ -6,72 +6,53 @@ use App\User\Exceptions\ExceptionUserNotExist;
 use App\User\Exceptions\ExceptionUserAlreadyExist;
 
 class User {
-    private $modelUser;
-    private $modelQuery;
+    private $model;
+    private $query;
 
-    public function __construct($modelUser, $modelQuery)
+    public function __construct($model, $query)
     {
-        $this->modelUser = $modelUser;
-        $this->modelQuery = $modelQuery;
+        $this->model = $model;
+        $this->query = $query;
     }
 
     public function new(String $email, String $password)
     {
-        $user = $this->modelQuery->create()
-            ->filterByEmail($email)
-            ->findOne();
-        if(!empty($user)){
-            throw new ExceptionUserAlreadyExist("Usuário já existe", 1);
-        }
-        $this->modelUser->setEmail($email);
-        $this->modelUser->setPassword(password_hash($password, PASSWORD_DEFAULT));
-        $this->modelUser->setIdExt(uniqid());
-        $this->modelUser->save();
+        $user = $this->query->create()->findOneByEmail($email);
 
-        return $this->modelUser;
+        try {
+            $user = $this->findByEmail($email);
+        } catch (ExceptionUserNotExist $e) {
+            $this->model->setEmail($email);
+            $this->model->setPassword(password_hash($password, PASSWORD_DEFAULT));
+            $this->model->setIdExt(uniqid());
+            $this->model->save();
+            return $this->model;
+        }
+        
+        throw new ExceptionUserAlreadyExist("Usuário já existe", 1);
     }
 
     public function checkExistUserByEmail(String $email)
     {   
         $user = $this->findByEmail($email);
-
-        if (!empty($user)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function checkAuth(String $email, String $senha)
-    {
-        //checar se email existe
-
-        //checar se senha é valida com email
-
-        //retornar true
+        return $user;
     }
 
     public function delete(String $email)
     {
         $userCurrent = $this->findByEmail($email);
-
-        if (empty($userCurrent)) {
-            throw new ExceptionUserNotExist("Usuário não existe", 1);
-        }
-
         $userCurrent->delete();
         return true;
     }
 
     private function findByEmail(String $email)
     {
-        $user = $this->modelUser->find(
-            array(
-                'conditions' => array(
-                    'email=?', $email
-                )
-            )
-        );
-        return $user;
+        $user = $this->query->create()->findOneByEmail($email);
+
+        if (empty($user)) {
+            throw new ExceptionUserNotExist("Usuário não existe", 1);
+        } else {
+            return $user;
+        }
     }
 }

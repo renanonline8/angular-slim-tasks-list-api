@@ -9,7 +9,9 @@ class CustomExceptionHandler {
     }
 
     public function __invoke($request, $response, $exception) {
-        $this->container->logger->error($exception->getMessage());
+        $errorMessage = 'Route: ' . $request->getUri();
+        $errorMessage .= ' - Message: ' . $exception->getMessage();
+        $this->container->logger->error($errorMessage);
         $result = array (
             'error' => true,
             'message' => 'Algo ocorreu de errado, cheque o log'
